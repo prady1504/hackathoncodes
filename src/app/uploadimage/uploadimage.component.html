@@ -2,7 +2,8 @@
     <div class="manual-container">
         <label for="key">Enter your items manually by comma separated</label>
         <input name="key" type="text" [(ngModel)]="items" />
-        <button class="button" (click)="onNext()">Next</button>
+        <span *ngIf="errorMessage2">{{errorMessage2}}</span>
+        <button class="button" (click)="manualSubmit()">Next</button>
     </div>
     <h1>OR</h1>
     <div class="image-container">
@@ -16,7 +17,7 @@
         </div>
         <ng-template #output>
             <div class="result">
-                Name: {{result.name}}- Confidence: {{result.confidence}}
+                Name: {{result.tagName}}- Probability: {{result.probability}}
             </div>
         </ng-template>
         <ul class="list">
@@ -24,3 +25,12 @@
         </ul>
     </div>
 </div>
+<div *ngIf="showLoader2; else finalResult">
+    <span class="info2">{{info2}}</span>
+</div>
+<ng-template #finalResult>
+    <div class="output-container">
+        <app-dish [dishList]="gptResponse" [strResponse]="gptResponseStr"></app-dish>
+    </div>
+</ng-template>
+

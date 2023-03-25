@@ -1,24 +1,34 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ApiService } from '../api.service';
+import { IChoice, IGPTResponse } from '../common.model';
+import { Constants } from '../constants';
 
 @Component({
   selector: 'app-uploadimage',
   templateUrl: './uploadimage.component.html',
   styleUrls: ['./uploadimage.component.scss']
 })
-export class UploadimageComponent implements OnInit {
+export class UploadimageComponent implements OnInit, OnDestroy {
   items: string;
   img: any;
   imageSrc: any;
   showLoader = false;
+  showLoader2 = false;
   errorMessage: string;
+  errorMessage2: string;
   productList: string[] = [];
   info: string;
+  info2: string;
   result = {} as {
-    name: string;
-    confidence: string;
+    tagName: string;
+    probability: string;
   };
-  constructor(private http: HttpClient) { }
+  gptResponse: any;
+  gptResponseStr: string;
+  congnitiveAPI$: Subscription;
+  chatGPT$: Subscription;
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
@@ -37,25 +47,100 @@ export class UploadimageComponent implements OnInit {
     if (this.img) {
       this.showLoader = true;
       this.info = 'Please wait ,Fetching data...';
-      const key: any = sessionStorage.getItem('openaisecretkey')?.toString();
-      const headers = new HttpHeaders()
-        .set('Content-Type', 'application/octet-stream')
-        .set('Ocp-Apim-Subscription-Key', key)
-      this.http.post('https://eastus.api.cognitive.microsoft.com/vision/v3.2/tag?language=en&model-version=latest', this.img, { headers: headers })
-        .subscribe((response: any) => {
-          this.result = response.tags[0];
-          this.productList.push(this.result.name);
-          this.showLoader = false;
-        }, () => {
-          this.info = 'It seems issue with fetching data, might be because of wrong key you entered'
-        })
+      this.info2 = '';
+      if (this.chatGPT$) {
+        this.chatGPT$.unsubscribe();
+      }
+      this.congnitiveAPI$ = this.apiService.callMsCognitiveAPIImageProcess(this.img).subscribe({
+        next: this.onSuccess.bind(this),
+        error: this.onError.bind(this)
+      })
     } else {
       this.errorMessage = 'Please select image file.';
     }
 
   }
-  onNext() {
 
+  onSuccess(res: any) {
+    this.result = res.predictions[0];
+    this.productList.push(this.result.tagName);
+    this.showLoader = false;
+    this.onNext(2);
+  }
+  onError() {
+    this.info = 'It seems issue with fetching data, might be because of wrong key you entered';
+  }
+  manualSubmit() {
+    if (this.items) {
+      this.onNext(1);
+      this.errorMessage2 = '';
+    } else {
+      this.errorMessage2 = 'Please enter item details';
+    }
+   
+  }
+  onNext(flag: number) {
+    this.showLoader2 = true;
+    this.info2 = 'Please wait ,Fetching data for you...';
+    const payLoad = this.getPayload(this.items, flag);
+    this.chatGPT$ =  this.apiService.callChatGPT(payLoad).subscribe({
+      next: this.onGPTSuccess.bind(this) as any,
+      error: this.onGPTError.bind(this)
+    })
+  }
+
+  getPayload(items: string, flag: number) {
+    let itemsList = '';
+    if (flag === 1) {
+      itemsList = items;
+    } else if (flag === 2) {
+      itemsList = this.productList.toString();
+    }
+    return {
+      "messages": [
+        {
+          "role": "user",
+          "content": Constants.labels.content.replace('{0}', itemsList)
+        }
+      ],
+     "temperature": 0.7,
+      "top_p": 0.95,
+      "frequency_penalty": 0,
+      "presence_penalty": 0,
+      "max_tokens": 8000,
+      "stop": null
+    }
+  }
+  onGPTSuccess(res: IGPTResponse) {
+    const choice = res?.choices?.[0];
+    this.formatResponseData(choice)
+    this.showLoader2 = false;
+  }
+
+  formatResponseData(choice: IChoice) {
+    const message = choice?.message?.content || '';
+    const formatedResponse = message.replace(/\n/g, '');
+    // this.gptResponse = formatedResponse;
+    try {
+      this.gptResponse = JSON.parse(formatedResponse);
+    } catch {
+      this.gptResponseStr = formatedResponse;
+    }
+    
+
+    console.log(formatedResponse);
+  }
+  onGPTError() {
+    this.info2 = 'It seems issue with fetching data as server experiencing . Please try again later';
+  }
+
+  ngOnDestroy(): void {
+    if (this.chatGPT$) {
+      this.chatGPT$.unsubscribe();
+    }
+    if (this.congnitiveAPI$) {
+      this.congnitiveAPI$.unsubscribe();
+    }
   }
 
 }

@@ -1,0 +1,72 @@
+@media (min-width: 320px) {
+    .card {
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    .panel {
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+    .panel2 {
+        display: block;
+        background-color: white;
+        overflow: hidden;
+    }
+    .displayBlock {
+        .panel {
+            display: block;
+        }
+        
+    }
+
+    hr {
+        width: 100%;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: lightseagreen;
+        font-size: 12px;
+        cursor: pointer;
+        padding: 0px;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 1s;
+    }
+    .active, .header:hover {
+        background-color: #ccc; 
+      }
+
+    .body {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (min-width: 1024px) {
+    .header {
+        font-size: 18px;
+    }
+
+    .body {
+        font-size: 16px;
+        word-wrap: break-word;
+    }
+}

@@ -1,0 +1,31 @@
+<div *ngIf="!strResponse; else strTemplate">
+    <ng-container *ngFor="let dish of dishList">
+        <div class="card" (click)="toggleCSS($event)">
+            <div class="header">
+              <h2>Dish Name : {{dish.dishName}}</h2>
+            </div>
+            <div class="panel">
+                <hr>
+                <div class="body">
+                  <div>{{dish.recipe}}</div>
+                </div>
+                <hr>
+                <div class="footer">
+                  <div>{{dish.nutritionalInformation || dish.nutritionalInfo}}</div>
+                </div>
+            </div>
+            
+          </div>
+    </ng-container>
+</div>
+<ng-template #strTemplate>
+    <div class="card">
+        <div class="panel2">
+            <hr>
+            <div class="body">
+              <div>{{strResponse}}</div>
+            </div>
+        </div>
+        
+      </div>
+</ng-template>

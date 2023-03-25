@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { UploadimageComponent } from './uploadimage/uploadimage.component';
 import { SecretKeyComponent } from './secret-key/secret-key.component';
 import { FormsModule } from '@angular/forms';
+import { DishComponent } from './dish/dish.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadimageComponent,
-    SecretKeyComponent
+    SecretKeyComponent,
+    DishComponent
   ],
   imports: [
     BrowserModule,
