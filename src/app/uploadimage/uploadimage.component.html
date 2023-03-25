@@ -1,0 +1,26 @@
+<div class="main-container">
+    <div class="manual-container">
+        <label for="key">Enter your items manually by comma separated</label>
+        <input name="key" type="text" [(ngModel)]="items" />
+        <button class="button" (click)="onNext()">Next</button>
+    </div>
+    <h1>OR</h1>
+    <div class="image-container">
+        <img *ngIf="imageSrc" id="blah" [src]="imageSrc" alt="your image" />
+        <input type="file" name="files" accept="image/*" (change)="onFileChanged($event)">
+        <span *ngIf="errorMessage">{{errorMessage}}</span>
+        <button class="submit-button" (click)="onSubmitImages()">Upload</button>
+        <div class="divider"></div>
+        <div *ngIf="showLoader; else output">
+            <span class="info">{{info}}</span>
+        </div>
+        <ng-template #output>
+            <div class="result">
+                Name: {{result.name}}- Confidence: {{result.confidence}}
+            </div>
+        </ng-template>
+        <ul class="list">
+            <li *ngFor="let item of productList">{{item}}</li>
+        </ul>
+    </div>
+</div>
