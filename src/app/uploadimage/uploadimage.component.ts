@@ -65,42 +65,50 @@ export class UploadimageComponent implements OnInit, OnDestroy {
     this.result = res.predictions[0];
     this.productList.push(this.result.tagName);
     this.showLoader = false;
-    this.onNext(2);
+    // this.onNext(2);
   }
   onError() {
     this.info = 'It seems issue with fetching data, might be because of wrong key you entered';
   }
   manualSubmit() {
-    if (this.items) {
-      this.onNext(1);
-      this.errorMessage2 = '';
-    } else {
-      this.errorMessage2 = 'Please enter item details';
-    }
+    const manualArr = this.items.split(',');
+    this.productList = [...this.productList, ...manualArr];
+    // if (this.items) {
+    //   this.onNext(1);
+    //   this.errorMessage2 = '';
+    // } else {
+    //   this.errorMessage2 = 'Please enter item details';
+    // }
    
   }
-  onNext(flag: number) {
-    this.showLoader2 = true;
-    this.info2 = 'Please wait ,Fetching data for you...';
-    const payLoad = this.getPayload(this.items, flag);
-    this.chatGPT$ =  this.apiService.callChatGPT(payLoad).subscribe({
-      next: this.onGPTSuccess.bind(this) as any,
-      error: this.onGPTError.bind(this)
-    })
+  onNext() {
+    if ( this.productList && this.productList.length) {
+      this.showLoader2 = true;
+      this.info2 = 'Please wait ,Fetching data for you...';
+      const payLoad = this.getPayload();
+      this.chatGPT$ =  this.apiService.callChatGPT(payLoad).subscribe({
+        next: this.onGPTSuccess.bind(this) as any,
+        error: this.onGPTError.bind(this)
+      })
+    } else {
+      this.showLoader2 = true;
+      this.info2 = 'Please select a few items';
+    }
+    
   }
 
-  getPayload(items: string, flag: number) {
-    let itemsList = '';
-    if (flag === 1) {
-      itemsList = items;
-    } else if (flag === 2) {
-      itemsList = this.productList.toString();
-    }
+  delteItem(index: number) {
+    this.productList.splice(index, 1);
+  }
+  trackbyFn(index: number) {
+    return index;
+  }
+  getPayload() {
     return {
       "messages": [
         {
           "role": "user",
-          "content": Constants.labels.content.replace('{0}', itemsList)
+          "content": Constants.labels.content.replace('{0}', this.productList.toString())
         }
       ],
      "temperature": 0.7,
@@ -124,7 +132,7 @@ export class UploadimageComponent implements OnInit, OnDestroy {
     try {
       this.gptResponse = JSON.parse(formatedResponse);
     } catch {
-      this.gptResponseStr = formatedResponse;
+      this.gptResponseStr = message;
     }
     
 
@@ -133,6 +141,7 @@ export class UploadimageComponent implements OnInit, OnDestroy {
   onGPTError() {
     this.info2 = 'It seems issue with fetching data as server experiencing . Please try again later';
   }
+
 
   ngOnDestroy(): void {
     if (this.chatGPT$) {

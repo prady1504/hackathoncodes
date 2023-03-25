@@ -20,11 +20,17 @@
                 Name: {{result.tagName}}- Probability: {{result.probability}}
             </div>
         </ng-template>
-        <ul class="list">
-            <li *ngFor="let item of productList">{{item}}</li>
-        </ul>
     </div>
 </div>
+<div class="list">
+    <ul >
+        <div *ngFor="let item of productList;index as i; trackBy:trackbyFn">{{item}}&nbsp;&nbsp;&nbsp;<span (click)="delteItem(i)">X</span>&nbsp;</div>
+    </ul>
+</div>
+<div class="finalSubmitBtn">
+    <button  (click)="onNext()">Get Recipes</button>
+</div>
+
 <div *ngIf="showLoader2; else finalResult">
     <span class="info2">{{info2}}</span>
 </div>
