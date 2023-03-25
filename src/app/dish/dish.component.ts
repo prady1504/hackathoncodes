@@ -7,7 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DishComponent implements OnInit {
 @Input() dishList: any;
-@Input() strResponse: any;
+  @Input() strResponse: any;
+
+JSON = JSON;
   constructor() { }
 
   ngOnInit(): void {
@@ -19,6 +21,6 @@ export class DishComponent implements OnInit {
     } else {
       child.style.display = 'block'
     }
-    
+
   }
 }

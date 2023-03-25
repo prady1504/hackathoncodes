@@ -22,17 +22,17 @@
                 padding: 8px;
                 width: 309px;
                 font-size: 16px;
-                border: 1px solid rgb(34, 160, 34);
+                border: 1px solid black;
             }
 
             span {
                 font-size: 14px;
                 margin-right: 197px;
-                color: red;
+                color: darkslategray;
             }
 
             .button {
-                background-color: #4CAF50;
+                background-color: black;
                 border: none;
                 color: white;
                 padding: 15px 32px;
@@ -43,11 +43,11 @@
                 width: 326px;
 
                 &:hover {
-                    background-color: #409a43;
+                    background-color: lightgray;
                 }
 
                 &:active {
-                    background-color: #9acb9d;
+                    background-color: lightgray;
                 }
 
             }
@@ -74,7 +74,7 @@
             .info {
                 font-size: 14px;
                 margin-right: 197px;
-                color: red;
+                color: darkslategray;
             }
 
             .info {
@@ -82,7 +82,7 @@
             }
 
             .submit-button {
-                background-color: #4CAF50;
+                background-color: black;
                 border: none;
                 color: white;
                 padding: 15px 32px;
@@ -93,17 +93,17 @@
                 width: 326px;
 
                 &:hover {
-                    background-color: #409a43;
+                    background-color: lightgray;
                 }
 
                 &:active {
-                    background-color: #9acb9d;
+                    background-color: lightgray;
                 }
 
             }
 
             .result {
-                color: rgb(168, 48, 48);
+                color: darkslategray;
             }
         }
     }
@@ -114,25 +114,27 @@
     .list {
         display: flex;
         justify-content: flex-start;
-        
+
         ul {
             display: flex;
             flex-direction: column;
             padding: 0;
+            border-radius: 40%;
             div {
+                border-radius: 40%;
                 display: block;
-                border: 1px solid green;
+                border: 1px solid black;
                 margin-left: 15px;
                 padding: 5px;
                 width: 85vw;
                 margin-top: 10px;
                 cursor: default;
                 &:hover {
-                    background-color: #9acb9d;
+                    background-color: lightgray;
                 }
                 span {
                     cursor: pointer;
-                    color: red;
+                    color: darkslategray;
                     margin-left: 62vw;
                 }
             }
@@ -142,7 +144,7 @@
         display: flex;
         justify-content: center;
         button {
-            background-color: #4CAF50;
+            background-color: black;
             border: none;
             color: white;
             padding: 15px 32px;
@@ -151,13 +153,13 @@
             font-size: 16px;
             margin: 10px 2px;
             width: 326px;
-    
+
             &:hover {
-                background-color: #409a43;
+                background-color: lightgray;
             }
-    
+
             &:active {
-                background-color: #9acb9d;
+                background-color: lightgray;
             }
         }
     }
@@ -167,7 +169,7 @@
         font-family: ui-rounded;
         display: flex;
         justify-content: center;
-        color: #4CAF50;
+        color: green;
     }
 
 }
@@ -195,6 +197,7 @@
         ul {
             flex-direction: row;
             div {
+                border-radius: 40%;
                 width: fit-content;
                 display: inline;
                 margin-top: 0px;

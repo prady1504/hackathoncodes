@@ -11,6 +11,7 @@ import { Constants } from '../constants';
 })
 export class UploadimageComponent implements OnInit, OnDestroy {
   items: string;
+  userPreference: string;
   img: any;
   imageSrc: any;
   showLoader = false;
@@ -73,13 +74,18 @@ export class UploadimageComponent implements OnInit, OnDestroy {
   manualSubmit() {
     const manualArr = this.items.split(',');
     this.productList = [...this.productList, ...manualArr];
+    this.productList = [...new Set([...this.productList, ...manualArr])]
     // if (this.items) {
     //   this.onNext(1);
     //   this.errorMessage2 = '';
     // } else {
     //   this.errorMessage2 = 'Please enter item details';
     // }
-   
+
+  }
+
+  updateUserPreference() {
+    this.userPreference = this.userPreference;
   }
   onNext() {
     if ( this.productList && this.productList.length) {
@@ -94,7 +100,7 @@ export class UploadimageComponent implements OnInit, OnDestroy {
       this.showLoader2 = true;
       this.info2 = 'Please select a few items';
     }
-    
+
   }
 
   delteItem(index: number) {
@@ -108,7 +114,7 @@ export class UploadimageComponent implements OnInit, OnDestroy {
       "messages": [
         {
           "role": "user",
-          "content": Constants.labels.content.replace('{0}', this.productList.toString())
+          "content": Constants.labels.content.replace('{0}', this.productList.toString()).replace('{1}', this.userPreference || '')
         }
       ],
      "temperature": 0.7,
@@ -134,7 +140,7 @@ export class UploadimageComponent implements OnInit, OnDestroy {
     } catch {
       this.gptResponseStr = message;
     }
-    
+
 
     console.log(formatedResponse);
   }

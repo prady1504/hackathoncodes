@@ -11,10 +11,10 @@
                 </div>
                 <hr>
                 <div class="footer">
-                  <div>{{dish.nutritionalInformation || dish.nutritionalInfo}}</div>
+                  <div>{{ JSON.stringify(dish.nutritionalInformation, undefined, 2) || dish.nutritionalInfo}}</div>
                 </div>
             </div>
-            
+
           </div>
     </ng-container>
 </div>
@@ -26,6 +26,6 @@
               <div>{{strResponse}}</div>
             </div>
         </div>
-        
+
       </div>
 </ng-template>
