@@ -74,14 +74,7 @@ export class UploadimageComponent implements OnInit, OnDestroy {
   manualSubmit() {
     const manualArr = this.items.split(',');
     this.productList = [...this.productList, ...manualArr];
-    this.productList = [...new Set([...this.productList, ...manualArr])]
-    // if (this.items) {
-    //   this.onNext(1);
-    //   this.errorMessage2 = '';
-    // } else {
-    //   this.errorMessage2 = 'Please enter item details';
-    // }
-
+    this.productList = [...new Set([...this.productList, ...manualArr])];
   }
 
   updateUserPreference() {
