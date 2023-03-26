@@ -83,7 +83,7 @@ export class UploadimageComponent implements OnInit, OnDestroy {
   onNext() {
     if ( this.productList && this.productList.length) {
       this.showLoader2 = true;
-      this.info2 = 'Please wait ,Fetching data for you...';
+      this.info2 = 'Please wait ,Fetching your dishes...';
       const payLoad = this.getPayload();
       this.chatGPT$ =  this.apiService.callChatGPT(payLoad).subscribe({
         next: this.onGPTSuccess.bind(this) as any,
