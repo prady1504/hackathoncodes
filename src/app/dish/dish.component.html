@@ -2,7 +2,7 @@
     <ng-container *ngFor="let dish of dishList">
         <div class="card" (click)="toggleCSS($event)">
             <div class="header">
-              <h2>Dish Name : {{dish.dishName}}</h2>
+              <h2>Dish Name : {{dish.dishName || dish.dish_name}}</h2>
             </div>
             <div class="panel">
                 <hr>

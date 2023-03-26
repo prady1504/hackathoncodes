@@ -135,14 +135,43 @@ export class UploadimageComponent implements OnInit, OnDestroy {
     const message = choice?.message?.content || '';
     const formatedResponse = message.replace(/\n/g, '');
     // this.gptResponse = formatedResponse;
+    const index0 = formatedResponse.indexOf('JSON Output:```');
+    const index0lower = formatedResponse.indexOf('JSON output:```');
+    const output = formatedResponse.indexOf('Output:');
+    const bracket = formatedResponse.indexOf('[');
     try {
       this.gptResponse = JSON.parse(formatedResponse);
+      if (this.gptResponse.dishes) {
+        this.gptResponse = this.gptResponse.dishes;
+      }
     } catch {
-      this.gptResponseStr = message;
+      try {
+        if (index0 > -1) {
+          const length = 'JSON Output:```'.length;
+          const totalLength = `${length + index0}`
+          this.gptResponse = JSON.parse(formatedResponse.slice(+totalLength, formatedResponse.length -3));
+  
+        } else if (index0lower > -1) {
+          const length = 'JSON output:```'.length;
+          const totalLength = `${length + index0lower}`
+          this.gptResponse = JSON.parse(formatedResponse.slice(+totalLength));
+  
+        } else if (output > -1) {
+          const length = 'Output:'.length;
+          const totalLength = `${length + output}`
+          this.gptResponse = JSON.parse(formatedResponse.slice(+totalLength));
+  
+        } else if (bracket > -1) {
+          const totalLength = `${bracket}`
+          this.gptResponse = JSON.parse(formatedResponse.slice(+totalLength));
+        } else {
+          this.gptResponseStr = message;
+        }
+      } catch {
+        this.gptResponseStr = message;
+      }
+      
     }
-
-
-    console.log(formatedResponse);
   }
   onGPTError() {
     this.info2 = 'It seems issue with fetching data as server experiencing . Please try again later';
