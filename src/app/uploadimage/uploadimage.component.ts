@@ -134,10 +134,6 @@ export class UploadimageComponent implements OnInit, OnDestroy {
   formatResponseData(choice: IChoice) {
     const message = choice?.message?.content || '';
     const formatedResponse = message.replace(/\n/g, '');
-    // this.gptResponse = formatedResponse;
-    const index0 = formatedResponse.indexOf('JSON Output:```');
-    const index0lower = formatedResponse.indexOf('JSON output:```');
-    const output = formatedResponse.indexOf('Output:');
     const bracketOpen = formatedResponse.indexOf('[');
     const bracketClose = formatedResponse.indexOf(']');
     try {
@@ -147,23 +143,8 @@ export class UploadimageComponent implements OnInit, OnDestroy {
       }
     } catch {
       try {
-        if (index0 > -1) {
-          const length = 'JSON Output:```'.length;
-          const totalLength = `${length + index0}`
-          this.gptResponse = JSON.parse(formatedResponse.slice(+totalLength, formatedResponse.length -3));
-  
-        } else if (index0lower > -1) {
-          const length = 'JSON output:```'.length;
-          const totalLength = `${length + index0lower}`
-          this.gptResponse = JSON.parse(formatedResponse.slice(+totalLength));
-  
-        } else if (output > -1) {
-          const length = 'Output:'.length;
-          const totalLength = `${length + output}`
-          this.gptResponse = JSON.parse(formatedResponse.slice(+totalLength));
-  
-        } else if (bracketOpen > -1) {
-          const close = `${bracketOpen + 1}`
+        if (bracketOpen > -1) {
+          const close = `${bracketClose + 1}`
           this.gptResponse = JSON.parse(formatedResponse.slice(bracketOpen, +close));
         } else {
           this.gptResponseStr = message;
