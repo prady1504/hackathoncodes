@@ -123,11 +123,11 @@
             border-radius: 40%;
 
             div {
-                border-radius: 40%;
+                border-radius: 27%;
                 display: block;
                 border: 1px solid black;
                 margin-left: 15px;
-                padding: 5px;
+                padding: 3px;
                 width: 85vw;
                 margin-top: 10px;
                 cursor: default;
@@ -224,7 +224,6 @@
             flex-direction: row;
 
             div {
-                border-radius: 40%;
                 width: fit-content;
                 display: inline;
                 margin-top: 0px;
