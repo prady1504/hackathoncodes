@@ -13,7 +13,7 @@ export class ApiService {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/octet-stream')
       .set('Prediction-Key', key)
-    return this.http.post('https://customhackathonvision-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/98d8b944-2a18-45a1-bf54-08a2e1e8ce96/classify/iterations/Iteration1/image',
+    return this.http.post('https://eastus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/98d8b944-2a18-45a1-bf54-08a2e1e8ce96/classify/iterations/Iteration2/image',
       image, { headers: headers }
     );
   }
