@@ -111,6 +111,7 @@
     .output-container {
         padding: 0px 5vw 0px 5vw;
     }
+
     .list {
         display: flex;
         justify-content: flex-start;
@@ -120,6 +121,7 @@
             flex-direction: column;
             padding: 0;
             border-radius: 40%;
+
             div {
                 border-radius: 40%;
                 display: block;
@@ -129,9 +131,11 @@
                 width: 85vw;
                 margin-top: 10px;
                 cursor: default;
+
                 &:hover {
                     background-color: lightgray;
                 }
+
                 span {
                     cursor: pointer;
                     color: darkslategray;
@@ -140,9 +144,22 @@
             }
         }
     }
+
+    .userPref {
+        display: flex;
+        flex-direction: column;
+        margin-left: 16px;
+
+        input {
+            padding: 3px;
+            width: 83vw;
+        }
+    }
+
     .finalSubmitBtn {
         display: flex;
         justify-content: center;
+
         button {
             background-color: black;
             border: none;
@@ -189,18 +206,29 @@
         }
     }
 
+    .userPref {
+        margin-left: 14vw;
+        input {
+            width: 19vw;
+        }
+    }
+
     .output-container {
         padding: 0px 13vw 0px 13vw;
     }
+
     .list {
         justify-content: center;
+
         ul {
             flex-direction: row;
+
             div {
                 border-radius: 40%;
                 width: fit-content;
                 display: inline;
                 margin-top: 0px;
+
                 span {
                     margin-left: 0px;
                 }

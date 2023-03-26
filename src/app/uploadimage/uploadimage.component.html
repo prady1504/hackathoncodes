@@ -30,12 +30,12 @@
 
 </div>
 
-<div class="userPref" style="margin-left: 20%; margin-right: 20%;">
+<div class="userPref">
     <label for="userPref">Enter your preferences: &nbsp;&nbsp;</label>
-    <input type="text" name="userPref" [(ngModel)]="userPreference" placeholder="vegetarian, asian, low fat dish" (onmouseout)="updateUserPreference()" size="100"/>
+    <input type="text" name="userPref" [(ngModel)]="userPreference" placeholder="vegetarian, asian, low fat dish" (onmouseout)="updateUserPreference()"/>
 
-    <br><br>
-    <label>*General spices & herbs are assumed</label>
+    <br>
+    <label class="infospice">*General spices & herbs are assumed</label>
 </div>
 
     <div class="finalSubmitBtn">
