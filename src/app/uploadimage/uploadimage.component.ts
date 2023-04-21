@@ -133,12 +133,14 @@ export class UploadimageComponent implements OnInit, OnDestroy {
       this.gptResponse = JSON.parse(formatedResponse);
       if (this.gptResponse.dishes) {
         this.gptResponse = this.gptResponse.dishes;
+        this.gptResponseStr = '';
       }
     } catch {
       try {
         if (bracketOpen > -1) {
           const close = `${bracketClose + 1}`
           this.gptResponse = JSON.parse(formatedResponse.slice(bracketOpen, +close));
+          this.gptResponseStr = '';
         } else {
           this.gptResponseStr = message;
         }

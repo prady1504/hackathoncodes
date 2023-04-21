@@ -1,5 +1,5 @@
 <div *ngIf="!strResponse; else strTemplate">
-    <ng-container *ngFor="let dish of dishList">
+    <ng-container *ngFor="let dish of dishArr">
         <div class="card" (click)="toggleCSS($event)">
             <div class="header">
               <h2>Dish Name : {{dish.dishName || dish.dish_name}}</h2>
@@ -11,7 +11,7 @@
                 </div>
                 <hr>
                 <div class="footer">
-                  <div>{{ JSON.stringify(dish.nutritionalInformation, undefined, 2) || dish.nutritionalInfo}}</div>
+                  <div>{{ JSON.stringify(dish.nutritionalInformation, undefined, 2) || dish.nutritionalInfo || JSON.stringify(dish.nutritional_info, undefined, 2) || JSON.stringify(dish.nutritional_information, undefined, 2)}}</div>
                 </div>
             </div>
 

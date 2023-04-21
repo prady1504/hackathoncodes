@@ -6,13 +6,15 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./dish.component.scss']
 })
 export class DishComponent implements OnInit {
+dishArr: any;
 @Input() dishList: any;
-  @Input() strResponse: any;
+@Input() strResponse: any;
 
 JSON = JSON;
   constructor() { }
 
   ngOnInit(): void {
+    this.dishArr = this.dishList;
   }
   toggleCSS(event: any) {
     const child = event.currentTarget.children[1];
